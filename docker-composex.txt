@@ -1,0 +1,35 @@
+services:
+  #angular:
+    #build: ./angular
+    #ports:
+    #  - "4200:4200"
+    #networks:
+    #  - app-network
+    #depends_on:
+    #  - express  
+
+  #express:
+  #  build: ./express
+  #  ports:
+  #    - "3000:3000"
+  #  networks:
+  #    - app-network
+  #  depends_on:
+  #    - fastapi 
+
+  fastapi:
+    build: ./fastapi
+    ports:
+      - "8000:8000"
+    networks:
+      - app-network
+    volumes:
+      - ./fastapi/app/arraydesactualizado.json:/app/arraydesactualizado.json
+      - ./fastapi/app/arrayactualizado.json:/app/arrayactualizado.json
+      - ./fastapi/app/datasql.json:/app/datasql.json
+      - ./fastapi/app/lotes.csv:/app/lotes.csv
+
+
+networks:
+  app-network:
+    driver: bridge

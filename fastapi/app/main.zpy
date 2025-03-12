@@ -1,0 +1,78 @@
+from fastapi import FastAPI, File, UploadFile
+import json
+from io import BytesIO
+
+
+from app.procesamiento import  procesar_diferenciasx
+from pydantic import BaseModel
+from typing import List
+
+
+app = FastAPI()
+
+class Datos(BaseModel):
+    AR1_CCODART: str
+    ST1_NSTODIS0000: int
+
+@app.get("/")
+def home():
+    return {"message": "Bienvenido a la API de procesamiento de datos"}
+
+
+'''@app.post("/recibir-datos")
+async def recibir_datos(files: List[UploadFile] = File(...)):
+    # Validar que se envíen exactamente dos archivos
+    if len(files) != 2:
+        return {"error": "Se deben enviar exactamente dos archivos"}
+
+    try:
+        # Leer y procesar el primer archivo
+        file1 = files[0]
+        data1 = json.loads((await file1.read()).decode("utf-8"))
+        print("Tamaño de datos del primer archivo:", len(data1))
+
+        # Leer y procesar el segundo archivo
+        file2 = files[1]
+        data2 = json.loads((await file2.read()).decode("utf-8"))
+        print("Tamaño de datos del segundo archivo:", len(data2))
+
+        # Procesar las diferencias
+        diferencias = procesar_diferenciasx(data1, data2)
+
+        return {"message": "Archivos recibidos correctamente", "diferencias": diferencias}
+
+    except Exception as e:
+        # Capturar cualquier error
+        return {"error": f"Error al procesar los archivos: {str(e)}"}
+'''
+@app.post("/recibir-datos")
+async def recibir_datos(files: List[UploadFile] = File(...)):
+    # Validar que se envíen exactamente dos archivos
+    if len(files) != 2:
+        return {"error": "Se deben enviar exactamente dos archivos"}
+
+    try:
+        # Leer y procesar el primer archivo
+        file1 = files[0]
+        data1 = json.loads((await file1.read()).decode("utf-8"))
+        print("Tamaño de datos del primer archivo:", len(data1))
+
+        # Leer y procesar el segundo archivo
+        file2 = files[1]
+        data2 = json.loads((await file2.read()).decode("utf-8"))
+        print("Tamaño de datos del segundo archivo:", len(data2))
+
+        # Procesar las diferencias
+        diferencias = procesar_diferenciasx(data1, data2)
+
+        print(diferencias)
+
+        return {"message": "Archivos recibidos correctamente", "diferencias": diferencias}
+
+    except Exception as e:
+        # Capturar cualquier error
+        return {"error": f"Error al procesar los archivos: {str(e)}"}
+
+
+
+

@@ -1,0 +1,23 @@
+services:
+  fastapi:
+    build: ./fastapi
+    ports:
+      - "8000:8000"
+    networks:
+      - app-network
+    volumes:
+      - ./fastapi/app/arraydesactualizado.json:/app/arraydesactualizado.json
+      - ./fastapi/app/arrayactualizado.json:/app/arrayactualizado.json
+      - ./fastapi/app/datasql.json:/app/datasql.json
+      - ./fastapi/app/lotes.csv:/app/lotes.csv
+    deploy:
+      resources:
+        limits:
+          cpus: "1" 
+          memory: 1g 
+    environment:
+      - PYTHONUNBUFFERED=1 
+
+networks:
+  app-network:
+    driver: bridge
